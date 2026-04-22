@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .doctor-image {
+      width: 200px;
+      height: 200px;
+      border: 2px dashed #2c3e50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 40px;
+    }
+
+    .doctor-info {
+      flex: 1;
+    }
+
+    .doctor-info h2 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <form action="/logout" method="GET">
+    <button class="logout-btn">Logout</button>
+  </form>
+
+  <div class="container">
+    <div class="doctor-image">
+      <!-- Placeholder for doctor image -->
+      Image Placeholder
+    </div>
+
+    <div class="doctor-info">
+      <h2>{{ doctor[1] }}</h2> <!-- Name -->
+      <p><strong>Email:</strong> {{ doctor[2] }}</p>
+      <p><strong>Specialization:</strong> {{ doctor[3] }}</p>
+      <p><strong>Degree:</strong> {{ doctor[4] }}</p>
+      <p><strong>About:</strong> {{ doctor[5] }}</p>
+    </div>
+  </div>
+</body>
+</html>

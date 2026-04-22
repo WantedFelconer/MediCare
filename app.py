@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
 
 
@@ -21,25 +21,28 @@ def home():
 @app.route('/login', methods = ['POST','GET'])
 def login():
     if request.method=='POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
         db = mysql.connection.cursor()
-        db.execute('SELECT password FROM USER WHERE name=%s',(username,))
+        db.execute('SELECT name,password,role FROM USER WHERE email=%s',(email,))
         db_info = db.fetchone()
         db.close()
         if db_info is None:
             return "No user found"
         else:
-            if password==db_info[0]:
-                stored_password = db_info[0]
+            if password==db_info[1]:
+                session['username'] = db_info[0]
+                session['role'] = db_info[2]
                 return redirect(url_for('dashboard'))
             
     return render_template('login.html')
 
 
-
-
+@app.route('/logout')
+def logout():
+    session.pop('username',None)
+    return redirect(url_for('login'))
 
 @app.route('/register',methods=['POST','GET'])
 def register():
@@ -56,6 +59,13 @@ def register():
 
     return render_template('register.html')
 
+@app.route('/search_page',methods=['POST','GET'])
+def search_page():
+    return render_template('search_page.html')
+
+# @app.route('/doctor_profile',methods=['POST','GET'])
+# def doctor_profile():
+#     return render_template('doctor_profile.html')
 
 @app.route('/dashboard')
 def dashboard():

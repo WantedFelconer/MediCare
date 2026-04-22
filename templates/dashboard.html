@@ -2,56 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>User Dashboard - MediCare</title>
+  <title>MediCare Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #f0f0f0, #d9e4f5);
       margin: 0;
-      padding: 2em;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
     }
+
     h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #2c3e50;
       text-align: center;
-      margin-bottom: 1em;
+      margin: 1.2em 0;
+      letter-spacing: 1px;
     }
-    table {
-      width: 80%;
-      margin: 0 auto;
-      border-collapse: collapse;
-      background: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    th, td {
+
+    .search-box {
+      width: 60%;
+      max-width: 600px;
       padding: 12px;
+      font-size: 1.1em;
       border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 2em;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5em;
+      width: 90%;
+      padding: 1em;
+    }
+
+    .doctor-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 1em;
       text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
     }
-    th {
-      background: #4CAF50;
-      color: white;
+
+    .doctor-card:hover {
+      transform: scale(1.05);
     }
-    tr:nth-child(even) {
-      background: #f9f9f9;
+
+    .doctor-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.8em;
+    }
+
+    .doctor-name {
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #333;
+      margin-bottom: 0.3em;
+    }
+
+    .doctor-specialty {
+      font-size: 0.95em;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <h1>All Registered Users</h1>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-    </tr>
-    {% for user in users %}
-    <tr>
-      <td>{{ user[0] }}</td>
-      <td>{{ user[1] }}</td>
-      <td>{{ user[2] }}</td>
-      <td>{{ user[3] }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+  <h1>Book a Doctor's Appointment in Just 10 Minutes with MediCare</h1>
+  <input type="text" class="search-box" placeholder="Search for doctors">
+
+  <div class="grid">
+    <!-- Example doctor tiles -->
+    <div class="doctor-card">
+      <div class="doctor-name">Dr. Ayesha Rahman</div>
+      <div class="doctor-specialty">Cardiologist</div>
+    </div>
+
+    <div class="doctor-card">
+      <div class="doctor-name">Dr. Imran Hossain</div>
+      <div class="doctor-specialty">Dermatologist</div>
+    </div>
+
+    <div class="doctor-card">
+      <div class="doctor-name">Dr. Nusrat Jahan</div>
+      <div class="doctor-specialty">Pediatrician</div>
+    </div>
+  </div>
+  {% for doctor in doctors %}
+  <div class="doctor-card" onclick="window.location.href='/doctor/{{ doctor.id }}'">
+    <img src="{{ url_for('static', filename=doctor.image) }}" alt="{{ doctor.name }}" class="doctor-img">
+    <div class="doctor-name">{{ doctor.name }}</div>
+    <div class="doctor-specialty">{{ doctor.specialty }}</div>
+  </div>
+  {% endfor %}
+</div>
+
 </body>
 </html>
