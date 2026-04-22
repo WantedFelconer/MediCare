@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 1em;
+      color: #333;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 0.6em 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    .submit-btn {
+      margin-top: 1em;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      color: white;
+      background: #e74c3c;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Login to MediCare</h1>
+  <form method="POST" action="/login">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit" class="submit-btn">Login</button>
+  </form>
+</body>
+</html>
