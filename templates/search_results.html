@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin: 1.5em 0;
+    }
+
+    .results-container {
+      width: 80%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5em;
+      padding: 1em;
+    }
+
+    .doctor-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 1em;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+
+    .doctor-card:hover {
+      transform: scale(1.05);
+    }
+
+    .doctor-name {
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #333;
+      margin-bottom: 0.3em;
+    }
+
+    .doctor-role {
+      font-size: 0.95em;
+      color: #555;
+      margin-bottom: 0.5em;
+    }
+
+    .doctor-email {
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .back-link {
+      margin: 2em 0;
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Results for "{{ query }}"</h1>
+
+  <div class="results-container">
+    {% if results %}
+      {% for user in results %}
+        <div class="doctor-card">
+          <div class="doctor-name">{{ user[1] }}</div>
+          <div class="doctor-role">{{ user[3] }}</div>
+          <div class="doctor-email">{{ user[2] }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No doctors found.</p>
+    {% endif %}
+  </div>
+
+  <a href="{{ url_for('search_page') }}" class="back-link">Back to Search</a>
+</body>
+</html>

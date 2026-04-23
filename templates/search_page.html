@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Doctors - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin: 1.5em 0 1em;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 1.5em;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      width: 60%;
+      max-width: 500px;
+      display: flex;
+      gap: 0.5em;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    .submit-btn {
+      padding: 12px 20px;
+      font-size: 1.1em;
+      color: white;
+      background: #e74c3c;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+    }
+
+    .logout-link {
+      margin-top: 1.5em;
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search for Doctors</h1>
+  <form action="{{ url_for('auth.search') }}" method="POST">
+    <input type="text" name="name" placeholder="Enter doctor name" required>
+    <button type="submit" class="submit-btn">Search</button>
+  </form>
+  <a href="{{ url_for('auth.logout') }}" class="logout-link">Logout</a>
+</body>
+</html>
