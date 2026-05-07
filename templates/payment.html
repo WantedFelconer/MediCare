@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment - MediCare</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: white;
+  padding: 2em;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  width: 400px;
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+}
+
+.price-box {
+  margin: 1em 0;
+  text-align: left;
+}
+
+.price-box p {
+  margin: 5px 0;
+}
+
+.total {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  margin-top: 1em;
+  padding: 12px;
+  width: 100%;
+  font-size: 1.1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #e74c3c;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #c0392b;
+}
+</style>
+</head>
+
+<body>
+
+<form method="POST" class="card">
+
+  <h2>Payment</h2>
+
+  <div class="price-box">
+    <p>Consultation Fee: 500 BDT</p>
+    <p>VAT (15%): 75 BDT</p>
+    <p class="total">Total: 575 BDT</p>
+  </div>
+
+  <input type="text" placeholder="Card Number">
+  <input type="text" placeholder="Expiry Date">
+  <input type="text" placeholder="CVV">
+
+  <button class="btn">Confirm Payment</button>
+
+</form>
+
+</body>
+</html>

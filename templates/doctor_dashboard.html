@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Dashboard - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .search-container {
+      margin-bottom: 30px;
+      background: white;
+      padding: 10px;
+      border-radius: 50px;
+      display: flex;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .search-container input {
+      border: none;
+      outline: none;
+      padding: 10px 20px;
+      flex: 1;
+      border-radius: 50px;
+      font-size: 1em;
+    }
+
+    .search-container button {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .results-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .result-item {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result-item a {
+      text-decoration: none;
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    h1 { font-size: 2.5em; margin: 0.5em 0; color: #333; }
+    .tagline { font-size: 1.4em; font-weight: bold; color: #2c3e50; margin: 0.5em 0; }
+    .btn-container { display: flex; flex-direction: column; gap: 15px; }
+    .btn { padding: 15px 40px; font-size: 1.1em; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: all 0.3s ease; text-decoration: none; display: inline-block; width: 250px; }
+    .appt-btn { background: #e74c3c; }
+    .profile-btn { background: #3498db; }
+    .logout-btn { background: #7f8c8d; }
+    .btn:hover { transform: scale(1.05); opacity: 0.9; }
+  </style>
+</head>
+<body>
+
+  <form class="search-container" method="POST" action="{{ url_for('auth.doctor_dashboard') }}">
+    <input type="text" name="patient_name" placeholder="Search Patient Name..." required>
+    <button type="submit">Search</button>
+  </form>
+
+  {% if search_results is not none %}
+  <div class="results-box">
+    {% if search_results %}
+      {% for p in search_results %}
+      <div class="result-item">
+        <span>{{ p[1] }}</span>
+        <a href="{{ url_for('auth.view_patient_profile', patient_id=p[0]) }}">View Records</a>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p style="padding: 10px;">No patient found.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <h1>Medicare</h1>
+  <p class="tagline">Welcome, Dr. {{ session['username'] }}</p>
+
+  <div class="btn-container">
+    <a href="{{ url_for('auth.doctor_notifications') }}" class="btn appt-btn">View Appointments</a>
+    <a href="{{ url_for('auth.my_profile') }}" class="btn profile-btn">My Profile Settings</a>
+    <a href="{{ url_for('auth.logout') }}" class="btn logout-btn">Logout</a>
+  </div>
+
+</body>
+</html>

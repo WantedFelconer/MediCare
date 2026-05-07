@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dr. {{ doctor[0] }} - Profile</title>
+    <style>
+        body { background: linear-gradient(to bottom right, #ffcccc, #ff9999); font-family: Arial; height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; }
+        .profile-card { background: white; padding: 2em; border-radius: 15px; width: 400px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .detail { margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .detail strong { color: #e74c3c; }
+        .book-btn { width: 100%; display: block; text-align: center; background: #3498db; color: white; padding: 12px; border-radius: 8px; text-decoration: none; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="profile-card">
+    <h2>Doctor Profile</h2>
+    <div class="detail"><strong>Name:</strong> {{ doctor.name }}</div>
+    <div class="detail"><strong>Email:</strong> {{ doctor.email }}</div>
+    <div class="detail"><strong>Sex:</strong> {{ doctor.sex if doctor.sex else 'Not Specified' }}</div>
+    <div class="detail"><strong>Speciality:</strong> {{ doctor.speciality }}</div>
+    <div class="detail"><strong>Degree:</strong> {{ doctor.degree if doctor.degree else 'Not Specified' }}</div>
+    <div class="detail"><strong>Experience:</strong> {{ doctor.experience if doctor.experience else '0' }} Years</div>
+
+    <a href="{{ url_for('auth.appoint', doctor_id=doctor.user_id) }}" class="book-btn">Book Appointment Now</a>
+</div>
+
+</body>
+</html>

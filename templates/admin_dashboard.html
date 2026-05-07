@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediCare Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+    }
+
+    /* --- Top Right Icons CSS --- */
+    .top-icons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logout-icon {
+      font-size: 1.8em;
+      color: #e74c3c;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .logout-icon:hover {
+      color: #c0392b;
+      transform: scale(1.1);
+    }
+    /* --------------------------- */
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin: 1.2em 0;
+      letter-spacing: 1px;
+    }
+
+    .user-table {
+      width: 90%;
+      border-collapse: collapse;
+      margin: 2em 0;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .user-table th, .user-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
+    .user-table th {
+      background: #e74c3c;
+      color: white;
+    }
+    .btn-edit, .btn-delete, .btn-save, .btn-add {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    .btn-delete{ background: #e74c3c; color: white; }
+    .btn-save  { background: #2ecc71; color: white; }
+    .btn-add    { background: #2ecc71; color: white; margin: 1em 0; padding: 10px 20px; font-size: 1em; }
+    
+    .add-form {
+      width: 90%;
+      background: white;
+      padding: 1.2em 2em;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: flex;
+      gap: 1em;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    .add-form input, .add-form select {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95em;
+      flex: 1;
+      min-width: 130px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-icons">
+    <a href="{{ url_for('auth.logout') }}" class="logout-icon" title="Logout">
+      &#x23FB; </a>
+  </div>
+
+  <h1>Admin Panel</h1>
+
+  <form class="add-form" method="POST" action="/add_user">
+    <strong>Add User:</strong>
+    <input type="text"     name="name"     placeholder="Full Name"  required>
+    <input type="email"    name="email"    placeholder="Email"      required>
+    <input type="password" name="password" placeholder="Password"   required>
+    <select name="role">
+      <option value="patient">Patient</option>
+      <option value="doctor">Doctor</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button type="submit" class="btn-add">+ Add</button>
+  </form>
+
+  <table class="user-table">
+    <tr>
+      <th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Edit</th><th>Delete</th>
+    </tr>
+    {% for user in users %}
+    <tr id="row-{{ user[0] }}">
+      <td>{{ user[0] }}</td>
+
+      <form method="POST" action="/edit_user/{{ user[0] }}" style="display:contents">
+        <td><input type="text"  name="name"  value="{{ user[1] }}" style="width:100%;padding:4px;border:1px solid #ccc;border-radius:4px"></td>
+        <td><input type="email" name="email" value="{{ user[2] }}" style="width:100%;padding:4px;border:1px solid #ccc;border-radius:4px"></td>
+        <td>
+          <select name="role" style="padding:4px;border:1px solid #ccc;border-radius:4px">
+            <option value="patient" {% if user[3]=='patient' %}selected{% endif %}>Patient</option>
+            <option value="doctor"  {% if user[3]=='doctor'  %}selected{% endif %}>Doctor</option>
+            <option value="admin"   {% if user[3]=='admin'   %}selected{% endif %}>Admin</option>
+          </select>
+        </td>
+        <td><button type="submit" class="btn-save">Save</button></td>
+      </form>
+
+      <td><a href="/delete_user/{{ user[0] }}" onclick="return confirm('Delete this user?')"><button class="btn-delete">Delete</button></a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Profile - MediCare</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      margin: 0;
+      padding: 40px;
+      color: #2c3e50;
+    }
+
+    .profile-container {
+      display: flex;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      padding: 2em;
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+    }
+
+    .doctor-avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 3px solid #e74c3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      color: #999;
+      margin-right: 40px;
+      background: #f9f9f9;
+    }
+
+    .doctor-info {
+      flex: 1;
+    }
+
+    .doctor-info h2 {
+      margin-top: 0;
+      font-size: 2em;
+      color: #e74c3c;
+    }
+
+    .doctor-info p {
+      margin: 0.5em 0;
+      font-size: 1.1em;
+    }
+
+    .appointment-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .appointment-btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 16px;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background: #1a252f;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logout -->
+  <form action="{{ url_for('auth.logout') }}" method="GET">
+    <button class="logout-btn">Logout</button>
+  </form>
+
+  <!-- Doctor Profile -->
+  <div class="profile-container">
+    <div class="doctor-avatar">
+      Avatar
+    </div>
+
+    <div class="doctor-info">
+      <h2>{{ doctor[1] }}</h2> <!-- Name -->
+      <p><strong>Email:</strong> {{ doctor['email'] }}</p>
+      <p><strong>Sex:</strong> {{ doctor['sex'] }}</p>
+      <p><strong>Speciality:</strong> {{ doctor['speciality'] }}</p>
+      <p><strong>Degree:</strong> {{ doctor['degree'] }}</p>
+      <p><strong>Experience:</strong> {{ doctor['experience'] }}</p>
+      <p><strong>About:</strong> {{ doctor['experience'] }}</p>
+    </div>
+
+    
+
+    <form action="/appointment/{{ doctor[0] }}" method="POST">
+      <button class="appointment-btn">Book Appointment</button>
+    </form>
+  </div>
+  
+
+  
+</body>
+</html>

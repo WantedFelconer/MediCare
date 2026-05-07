@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Doctor Notifications - MediCare</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 { margin: 1.5em 0 0.5em 0; color: #2c3e50; }
+
+.container { width: 90%; max-width: 800px; }
+
+/* Clear All Section */
+.header-actions {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.clear-btn {
+  background: #2c3e50;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.notification-card {
+  background: white;
+  padding: 1.5em;
+  border-radius: 12px;
+  margin-bottom: 1em;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.notification-card p { margin: 0.5em 0; color: #333; }
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-pending  { background: #fff3cd; color: #856404; }
+.status-accepted { background: #d1ecf1; color: #0c5460; }
+.status-paid     { background: #d4edda; color: #155724; }
+.status-rejected { background: #f8d7da; color: #721c24; }
+
+.actions {
+  margin-top: 1.2em;
+  border-top: 1px solid #eee;
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.accept { background: #27ae60; }
+.reject { background: #e74c3c; }
+.dismiss-link { color: #e74c3c; text-decoration: none; font-size: 0.9em; font-weight: bold; }
+
+.top-icons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.icon { font-size: 1.8em; color: #e74c3c; text-decoration: none; }
+</style>
+</head>
+
+<body>
+
+<div class="top-icons">
+  <a href="{{ url_for('auth.doctor_dashboard') }}" class="icon" title="Back to Dashboard">🏠</a>
+  <a href="{{ url_for('auth.logout') }}" class="icon" title="Logout">⏻</a>
+</div>
+
+<h1>Appointment Requests</h1>
+
+<div class="container">
+    {% if appointments %}
+    <div class="header-actions">
+        <a href="{{ url_for('auth.clear_all_doctor_notifications') }}" class="clear-btn" onclick="return confirm('Archive all paid notifications?')">Clear All Paid</a>
+    </div>
+    {% endif %}
+
+    {% for appt in appointments %}
+    <div class="notification-card">
+      <p><strong>Patient:</strong> {{ appt[1] }}</p>
+      <p><strong>Date:</strong> {{ appt[2] }}</p>
+      <p><strong>Time:</strong> {{ appt[3] }}</p>
+      <p><strong>Reason:</strong> {{ appt[4] if appt[4] else 'General Consultation' }}</p>
+      
+      <p><strong>Current Status:</strong> 
+        <span class="status-badge status-{{ appt[5] }}">
+            {{ appt[5] }}
+        </span>
+      </p>
+
+      {% if appt[5] == 'pending' %}
+      <div class="actions">
+        <div>
+            <a href="{{ url_for('auth.update_appointment', id=appt[0], action='accept') }}" class="btn accept">Accept</a>
+            <a href="{{ url_for('auth.update_appointment', id=appt[0], action='reject') }}" class="btn reject">Reject</a>
+        </div>
+      </div>
+      {% elif appt[5] == 'paid' or appt[5] == 'rejected' %}
+      <div class="actions">
+        <span style="color: #666; font-size: 0.9em;">Record processed.</span>
+        <a href="{{ url_for('auth.remove_doctor_notification', appt_id=appt[0]) }}" class="dismiss-link">Remove from view</a>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if appointments|length == 0 %}
+      <div style="background: rgba(255,255,255,0.5); padding: 2em; border-radius: 12px; text-align:center;">
+        <p style="color: #2c3e50; font-size: 1.2em;">No active requests found.</p>
+      </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

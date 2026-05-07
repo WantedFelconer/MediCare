@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Appointments - MediCare</title>
+    <style>
+        body { background: #fdf2f2; font-family: Arial; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .appt-card { 
+            background: white; padding: 20px; border-radius: 12px; 
+            margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .status { font-weight: bold; padding: 5px 10px; border-radius: 5px; text-transform: uppercase; font-size: 0.8em; }
+        .pending { background: #ffeaa7; color: #d63031; }
+        .accepted { background: #55efc4; color: #00b894; }
+        .paid { background: #81ecec; color: #008b8b; }
+        .rejected { background: #fab1a0; color: #e17055; }
+        
+        .pay-btn { background: #3498db; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9em; }
+        .clear-btn { background: #e74c3c; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.85em; }
+        .remove-link { color: #e74c3c; text-decoration: none; font-size: 0.8em; margin-left: 15px; font-weight: bold; }
+        .remove-link:hover { text-decoration: underline; }
+        .action-group { display: flex; align-items: center; gap: 10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-flex">
+        <h2>My Appointment History</h2>
+        {% if appointments %}
+            <a href="{{ url_for('auth.clear_all_paid_notifications') }}" class="clear-btn" onclick="return confirm('Clear all paid appointment notifications?')">Clear All Paid</a>
+        {% endif %}
+    </div>
+
+    {% if appointments %}
+        {% for appt in appointments %}
+        <div class="appt-card">
+            <div>
+                <h3 style="margin: 0 0 5px 0;">Dr. {{ appt[1] }}</h3>
+                <p style="margin: 5px 0;">Date: {{ appt[2] }} | Time: {{ appt[3] }}</p>
+                <span class="status {{ appt[4] }}">{{ appt[4] }}</span>
+            </div>
+            
+            <div class="action-group">
+                {% if appt[4] == 'accepted' %}
+                    <a href="{{ url_for('auth.payment', appointment_id=appt[0]) }}" class="pay-btn">Proceed to Payment</a>
+                {% elif appt[4] == 'paid' %}
+                    <a href="{{ url_for('auth.invoice', appointment_id=appt[0]) }}" style="color: #3498db; text-decoration: none; font-weight: bold;">View Invoice</a>
+                    <a href="{{ url_for('auth.remove_notification', appt_id=appt[0]) }}" class="remove-link">Remove</a>
+                {% elif appt[4] == 'rejected' %}
+                    <a href="{{ url_for('auth.remove_notification', appt_id=appt[0]) }}" class="remove-link">Dismiss</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 40px; background: white; border-radius: 15px;">
+            <p>No active notifications found.</p>
+        </div>
+    {% endif %}
+    <br>
+    <a href="{{ url_for('auth.patient_dashboard') }}" style="color: #2c3e50; font-weight: bold; text-decoration: none;">← Back to Dashboard</a>
+</div>
+</body>
+</html>

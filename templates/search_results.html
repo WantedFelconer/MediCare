@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ speciality }} Results - MediCare</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1em;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+        }
+
+        .results-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .doc-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .doc-card:hover {
+            transform: scale(1.02);
+        }
+
+        .doc-info h3 {
+            margin: 0;
+            color: #e74c3c;
+        }
+
+        .doc-info p {
+            margin: 5px 0 0;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .consult-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .consult-btn:hover {
+            background: #c0392b;
+        }
+
+        .no-results {
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Specialists in: {{ speciality }}</h2>
+
+    <div class="results-container">
+        {% if doctors %}
+            {% for doc in doctors %}
+            <div class="doc-card">
+                <div class="doc-info">
+                    <h3>Dr. {{ doc[1] }}</h3>
+                    <p><strong>{{ doc[3] }}</strong> | {{ doc[2] }}</p>
+                </div>
+                <a href="{{ url_for('auth.doctor_profile', user_id=doc[0]) }}" class="consult-btn">Consult</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <p>We couldn't find any doctors categorized as <strong>{{ speciality }}</strong> at the moment.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('auth.search_page') }}" class="back-link">← Back to Search</a>
+
+</body>
+</html>

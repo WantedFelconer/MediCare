@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Profile</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  background: white;
+  padding: 2em;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1em;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #555;
+  font-size: 0.9em;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background: #c0392b;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>My Profile</h2>
+
+  <form method="POST">
+
+    <label>User ID</label>
+    <input type="text" value="{{ profile[0] if profile else '' }}" readonly>
+
+    <label>Name</label>
+    <input type="text" name="name" value="{{ profile[1] if profile else '' }}" required>
+
+    <label>Sex</label>
+    <input type="text" name="sex" value="{{ profile[2] if profile else '' }}" placeholder="Male/Female/Other">
+
+    {% if role == 'doctor' %}
+      <div class="form-group">
+        <label>Speciality</label>
+        <select name="speciality" required>
+          <option value="" disabled {% if not profile or not profile[3] %}selected{% endif %}>Select your speciality</option>
+          <option value="Gynecologist & Obstetrician" {% if profile and profile[3] == 'Gynecologist & Obstetrician' %}selected{% endif %}>Gynecologist & Obstetrician</option>
+          <option value="Medicine Specialist" {% if profile and profile[3] == 'Medicine Specialist' %}selected{% endif %}>Medicine Specialist</option>
+          <option value="Cardiologist" {% if profile and profile[3] == 'Cardiologist' %}selected{% endif %}>Cardiologist</option>
+          <option value="Pediatrician" {% if profile and profile[3] == 'Pediatrician' %}selected{% endif %}>Pediatrician</option>
+          <option value="General Surgeon" {% if profile and profile[3] == 'General Surgeon' %}selected{% endif %}>General Surgeon</option>
+          <option value="Psychiatrist" {% if profile and profile[3] == 'Psychiatrist' %}selected{% endif %}>Psychiatrist</option>
+          <option value="Oncologist" {% if profile and profile[3] == 'Oncologist' %}selected{% endif %}>Oncologist</option>
+          <option value="Dermatologist" {% if profile and profile[3] == 'Dermatologist' %}selected{% endif %}>Dermatologist</option>
+          <option value="Dentist" {% if profile and profile[3] == 'Dentist' %}selected{% endif %}>Dentist</option>
+          <option value="Neurosurgeon" {% if profile and profile[3] == 'Neurosurgeon' %}selected{% endif %}>Neurosurgeon</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Degree</label>
+        <input type="text" name="degree" value="{{ profile[4] if profile and profile[4] else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label>Experience (Years)</label>
+        <input type="number" name="experience" value="{{ profile[5] if profile and profile[5] else '' }}">
+      </div>
+    {% endif %}
+
+    {% if role == 'patient' %}
+      <div class="form-group">
+        <label>Age</label>
+        <input type="number" name="age" value="{{ profile[3] if profile and profile[3] else '' }}">
+      </div>
+
+      <div class="form-group">
+        <label>Medical Records</label>
+        <input type="text" name="medical_records" value="{{ profile[4] if profile and profile[4] else '' }}">
+      </div>
+    {% endif %}
+
+    <button type="submit">Save Changes</button>
+  </form>
+</div>
+
+</body>
+</html>

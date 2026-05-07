@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Specialists - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+      padding-top: 60px;
+    }
+
+    /* Top Navigation Icons */
+    .top-icons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-icon, .logout-icon, .notification-icon {
+      font-size: 1.8em;
+      color: #e74c3c;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .profile-icon:hover, .logout-icon:hover, .notification-icon:hover {
+      color: #c0392b;
+      transform: scale(1.1);
+    }
+
+    /* --- SEARCH BAR STYLES --- */
+    .search-section {
+      margin-top: 20px;
+      width: 90%;
+      max-width: 500px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: 1px solid #fff;
+      outline: none;
+      font-size: 1em;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .search-btn {
+      padding: 10px 25px;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .search-btn:hover { background: #1a252f; }
+
+    .search-results-container {
+      width: 90%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.9);
+      margin-top: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .search-result-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+
+    .result-name {
+      font-weight: bold;
+      color: #e74c3c;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+
+    .result-meta { color: #666; font-size: 0.9em; }
+    /* -------------------------- */
+
+    .consult-heading {
+      font-size: 2.2em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 1em 0 0.5em;
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+    }
+
+    .sub-text {
+      color: #555;
+      margin-bottom: 2em;
+      font-size: 1.1em;
+    }
+
+    .specialties {
+      margin-bottom: 3em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5em;
+      width: 90%;
+      max-width: 1100px;
+    }
+
+    .specialty-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      padding: 1.5em 1em;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .specialty-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .specialty-icon {
+      font-size: 3.5em;
+      margin-bottom: 0.3em;
+      color: #e74c3c;
+    }
+
+    .specialty-title {
+      font-weight: bold;
+      margin-bottom: 0.8em;
+      color: #2c3e50;
+      min-height: 2.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .consult-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #e74c3c;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.95em;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .consult-btn:hover {
+      background: #c0392b;
+    }
+
+    .reviews {
+      margin: 2em auto 4em;
+      text-align: center;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 2em;
+      border-radius: 20px;
+    }
+    .reviews h2 { color: #2c3e50; margin-bottom: 0.2em; }
+    
+    .review-container {
+      position: relative;
+      margin-top: 1.5em;
+      min-height: 140px;
+    }
+    .review {
+      display: none;
+      font-size: 1.1em;
+      font-style: italic;
+      line-height: 1.6;
+      background: #fff;
+      padding: 1.5em;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .review.active { display: block; }
+    .review span {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+      font-style: normal;
+      color: #e74c3c;
+    }
+    .review-controls button {
+      margin: 0 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #e74c3c;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .review-controls button:hover { background: #c0392b; }
+  </style>
+</head>
+<body>
+
+  <div class="top-icons">
+    <a href="{{ url_for('auth.patient_notifications') }}" class="notification-icon" title="My Appointments"> &#128276; </a>
+    <a href="{{ url_for('auth.my_profile') }}" class="profile-icon" title="Profile"> &#128100; </a>
+    <a href="{{ url_for('auth.logout') }}" class="logout-icon" title="Logout"> &#x23FB; </a>
+  </div>
+
+  <form class="search-section" method="POST" action="{{ url_for('auth.patient_dashboard') }}">
+    <input type="text" name="doctor_name" class="search-input" placeholder="Search for doctors by name..." required>
+    <button type="submit" class="search-btn">Search</button>
+  </form>
+
+  {% if search_results is not none %}
+  <div class="search-results-container">
+    {% if search_results %}
+      {% for doc in search_results %}
+      <div class="search-result-item">
+        <div>
+          <a href="{{ url_for('auth.doctor_profile', user_id=doc[0]) }}" class="result-name">Dr. {{ doc[1] }}</a>
+          <div class="result-meta">{{ doc[2] }} | {{ doc[3] }}</div>
+        </div>
+        <a href="{{ url_for('auth.doctor_profile', user_id=doc[0]) }}" class="consult-btn" style="padding: 5px 15px; font-size: 0.8em;">View Profile</a>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p style="padding: 15px; text-align: center; color: #555;">No doctors found matching that name.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <h1 class="consult-heading">Consult Our Best Doctors</h1>
+  <p class="sub-text">Select a specialty to find the right care for you</p>
+
+  <div class="specialties">
+    <div class="specialty-card">
+      <div class="specialty-icon">👩‍🍼</div>
+      <div class="specialty-title">Gynecologist & Obstetrician</div>
+      <a href="{{ url_for('auth.category_search', speciality='Gynecologist & Obstetrician') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">💊</div>
+      <div class="specialty-title">Medicine Specialist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Medicine Specialist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">❤️</div>
+      <div class="specialty-title">Cardiologist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Cardiologist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">👶</div>
+      <div class="specialty-title">Pediatrician</div>
+      <a href="{{ url_for('auth.category_search', speciality='Pediatrician') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🔪</div>
+      <div class="specialty-title">General Surgeon</div>
+      <a href="{{ url_for('auth.category_search', speciality='General Surgeon') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🧠</div>
+      <div class="specialty-title">Psychiatrist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Psychiatrist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🧬</div>
+      <div class="specialty-title">Oncologist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Oncologist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🌞</div>
+      <div class="specialty-title">Dermatologist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Dermatologist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🦷</div>
+      <div class="specialty-title">Dentist</div>
+      <a href="{{ url_for('auth.category_search', speciality='Dentist') }}" class="consult-btn">Consult Now</a>
+    </div>
+
+    <div class="specialty-card">
+      <div class="specialty-icon">🧠🔪</div>
+      <div class="specialty-title">Neurosurgeon</div>
+      <a href="{{ url_for('auth.category_search', speciality='Neurosurgeon') }}" class="consult-btn">Consult Now</a>
+    </div>
+  </div>
+
+  <div class="reviews">
+    <h2>Why People Love MediCare</h2>
+    <p>We continuously improve our services based on your feedback</p>
+
+    <div class="review-container">
+      <div class="review active">
+        <p>"Thank you so much for your diligent follow up. It is very rare that customer support ever reverts. Reaffirms my faith in MediCare."</p>
+        <span>- Israt Mou</span>
+      </div>
+      <div class="review">
+        <p>"The service of MediCare is praiseworthy. When my grandmother was at a critical moment, we were so relieved to find help so quickly."</p>
+        <span>- Labby Ahsan</span>
+      </div>
+      <div class="review">
+        <p>"Very easy to book and maintain history. Hassle free compared to older methods of booking appointments. Simple and effective."</p>
+        <span>- Mashrur Enan</span>
+      </div>
+    </div>
+
+    <div class="review-controls">
+      <button onclick="showReview(0)">1</button>
+      <button onclick="showReview(1)">2</button>
+      <button onclick="showReview(2)">3</button>
+    </div>
+  </div>
+
+  <script>
+    function showReview(index) {
+      const reviews = document.querySelectorAll('.review');
+      reviews.forEach((rev, i) => {
+        rev.classList.toggle('active', i === index);
+      });
+    }
+  </script>
+</body>
+</html>

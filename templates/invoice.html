@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invoice - MediCare</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: white;
+  padding: 2em;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  width: 400px;
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+}
+
+.invoice-box {
+  text-align: left;
+  margin-top: 1em;
+}
+
+.invoice-box p {
+  margin: 6px 0;
+}
+
+.total {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.btn {
+  margin-top: 1em;
+  padding: 12px;
+  width: 100%;
+  font-size: 1.1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #e74c3c;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #c0392b;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h2>Invoice</h2>
+
+  <div class="invoice-box">
+    <p><strong>Doctor:</strong> {{ data[3] }}</p>
+    <p>Consultation Fee: {{ data[0] }} BDT</p>
+    <p>VAT: {{ data[1] }} BDT</p>
+    <p class="total">Total Paid: {{ data[2] }} BDT</p>
+  </div>
+
+  <a href="{{ url_for('auth.search_page') }}">
+    <button class="btn">Back to Home</button>
+  </a>
+
+</div>
+
+</body>
+</html>

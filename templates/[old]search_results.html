@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: bold;
+      color: #2c3e50;
+      text-align: center;
+      margin: 1.5em 0 1em;
+    }
+
+    .results-container {
+      width: 80%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      margin-top: 2em;
+    }
+
+    .result-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      padding: 1em 1.5em;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #2c3e50;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .result-card:hover {
+      transform: scale(1.05);
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search Results for "{{ name_query }}"</h1>
+
+<div class="results-container">
+  {% if exact_match %}
+    <a href="{{ url_for('auth.doctor_profile', user_id=exact_match[0]) }}" class="result-card">
+      {{ exact_match[1] }}
+    </a>
+  {% endif %}
+
+  {% for doctor in similar_matches %}
+    <a href="{{ url_for('auth.doctor_profile', user_id=doctor[0]) }}" class="result-card">
+      {{ doctor[1] }}
+    </a>
+  {% endfor %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediCare Homepage</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin: 0.5em 0;
+      color: #333;
+    }
+
+    .tagline {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin: 0.5em 0;
+      letter-spacing: 1px;
+    }
+
+    .instruction {
+      font-size: 1.1em;
+      font-style: italic;
+      color: #555;
+      margin: 0.3em 0;
+    }
+
+    .btn {
+      margin-top: 1em;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .login-btn {
+      background: #e74c3c;
+    }
+
+    .login-btn:hover {
+      background: #c0392b;
+      transform: scale(1.05);
+    }
+
+    .register-btn {
+      background: #3498db;
+    }
+
+    .register-btn:hover {
+      background: #2980b9;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>Medicare</h1>
+  <p class="tagline">Appoint your doctor now</p>
+  <p class="instruction">Click the button below to Login</p>
+  <button class="btn login-btn" onclick="window.location.href='/login'">Login</button>
+  <button class="btn register-btn" onclick="window.location.href='/register'">Register</button>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Profile - MediCare</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+      font-family: Arial, sans-serif;
+    }
+    .profile-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+    }
+    h2 { color: #e74c3c; border-bottom: 2px solid #ffcccc; padding-bottom: 10px; }
+    .info-group { margin: 15px 0; }
+    .label { font-weight: bold; color: #2c3e50; display: block; margin-bottom: 5px; }
+    .value { color: #555; font-size: 1.1em; }
+    .history-badge {
+      background: #3498db;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .back-link { display: block; margin-top: 20px; text-decoration: none; color: #7f8c8d; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="profile-card">
+  <h2>Patient Medical Record</h2>
+  
+  <div class="info-group">
+    <span class="label">Patient ID:</span>
+    <span class="value">#{{ profile[0] }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Name:</span>
+    <span class="value">{{ profile[1] }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Sex:</span>
+    <span class="value">{{ profile[2] }}</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Age:</span>
+    <span class="value">{{ profile[3] }} years</span>
+  </div>
+
+  <div class="info-group">
+    <span class="label">Medical Records:</span>
+    <span class="value">{{ profile[4] if profile[4] else 'No history provided' }}</span>
+  </div>
+
+  <div class="history-badge">
+    Total Appointments with you: <strong>{{ appt_count }}</strong>
+  </div>
+
+  <a href="{{ url_for('auth.doctor_dashboard') }}" class="back-link">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

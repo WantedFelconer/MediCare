@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Appointment - MediCare</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #ffcccc, #ff9999);
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background: white;
+  padding: 2em;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  width: 400px;
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 1em;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+textarea {
+  resize: none;
+}
+
+.btn {
+  margin-top: 1em;
+  padding: 12px;
+  width: 100%;
+  font-size: 1.1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #e74c3c;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #c0392b;
+  transform: scale(1.03);
+}
+</style>
+</head>
+
+<body>
+
+<form method="POST" class="card">
+  <h2>Book Appointment</h2>
+
+  <input type="hidden" name="doctor_id" value="{{ doctor_id }}">
+
+  <input type="date" name="date" required>
+  <input type="time" name="time" required>
+
+  <textarea name="reason" placeholder="Reason for visit" required></textarea>
+  <textarea name="symptoms" placeholder="Symptoms (optional)"></textarea>
+
+  <button class="btn">Confirm Appointment</button>
+</form>
+
+</body>
+</html>

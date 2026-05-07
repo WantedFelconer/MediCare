@@ -1,0 +1,17 @@
+<form method="POST">
+  <input type="hidden" name="doctor_id" value="{{ doctor_id }}">
+
+  <label>Date:</label>
+  <input type="date" name="date" required>
+
+  <label>Time:</label>
+  <input type="time" name="time" required>
+
+  <label>Reason:</label>
+  <textarea name="reason" required></textarea>
+
+  <label>Symptoms:</label>
+  <textarea name="symptoms"></textarea>
+
+  <button type="submit">Confirm Appointment</button>
+</form>

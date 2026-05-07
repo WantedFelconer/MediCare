@@ -1,0 +1,14 @@
+ADMIN 
+
+Email: admin@medicare.com
+
+Password: admin123 
+
+DOCTOR 
+
+noman@medicare.com 
+12345678 
+
+PATIENT 
+ross@gmail.com 
+12345678
